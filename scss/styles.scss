@@ -1,0 +1,106 @@
+// variables
+:root {
+	--primaryLight: #477ce7;
+	--primary: #1462ff;
+	--primaryLightest: #6eb9f7;
+	--primaryHoverG: #47a7f5 radial-gradient(circle, transparent 1%, #36a8eb 1%)
+		center/15000%;
+}
+/*styles
+body
+*/
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background: #212121;
+	gap: 1rem;
+}
+// Everything
+* {
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+		Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+// ripple
+
+@mixin ripple-element() {
+	content: "";
+	width: 100%;
+	height: auto;
+	padding-bottom: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	background: var(--primaryLight);
+	border-radius: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	visibility: hidden;
+}
+
+@mixin ripple-element-active() {
+	visibility: visible;
+}
+@keyframes scale-up {
+	from {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(0);
+	}
+
+	to {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+// button
+button {
+	color: whitesmoke;
+	background-color: var(--primaryLight);
+	justify-content: space-around;
+	background-position: center;
+	transition: background 0.8s;
+	cursor: pointer;
+	padding: 1rem 2rem 1rem 2rem;
+	border-radius: 1rem;
+	border: none;
+	box-shadow: 0 6px 30px -10px var(--primary);
+	cursor: pointer;
+	&::before {
+		@include ripple-element();
+	}
+
+	button:not(:active)::before {
+		animation: scale-up 0.3s ease-out 0s;
+	}
+	&:focus::before {
+		@include ripple-element-active();
+	}
+	&::before {
+		width: 150%;
+		padding-bottom: 150%;
+		animation-duration: 0.3s;
+	}
+	&:hover {
+		background: var(--primaryHoverG);
+	}
+	&:active {
+		background-color: var(--primaryLightest);
+		background-size: 100%;
+		transition: background 0s;
+	}
+}
+// input/ select
+input,
+select {
+	border: none;
+	background: whitesmoke;
+	border-radius: 1rem;
+	padding: 1rem;
+	font-size: 1.25rem;
+}
+
+*:active,
+*:focus {
+	outline: none;
+}
